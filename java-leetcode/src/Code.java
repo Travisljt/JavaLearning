@@ -1,5 +1,6 @@
 
 
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 import java.util.*;
 
 
@@ -44,8 +45,23 @@ public class Code {
 //        int sr = 1, sc = 1, newColor = 2;
 //        System.out.println(Arrays.deepToString(floodFill(image, sr, sc, newColor)));
 
-        TreeNode root;
-        //二叉搜索树，查看leetcode
+//        TreeNode root;
+//        //二叉搜索树，查看leetcode
+
+//        TreeNode root;
+//        //平衡二叉树，查看leetcode
+//
+//        MyQueue obj = new MyQueue();
+//        obj.push(1);
+//        obj.push(2);
+//        int param_2 = obj.pop();
+//        int param_3 = obj.peek();
+//        boolean param_4 = obj.empty();
+//        System.out.println(param_2+"\n"+param_3+"\n"+param_4);
+
+        String ransomNote = "aa";
+        String magazine = "aab";
+        System.out.println(canConstruct(ransomNote,magazine));
     }
 
 
@@ -241,17 +257,7 @@ public class Code {
         if(s.length()!=t.length()){
             return false;
         }
-        int[] hashtable = new int[26];
-        for(char q : s.toCharArray()){
-            hashtable[q-'a']++;
-        }
-        for(char q : t.toCharArray()){
-            hashtable[q-'a']--;
-            if(hashtable[q-'a']<0){
-                return false;
-            }
-        }
-        return true;
+        return hashtable(t, s);//详细见下文
     }
 
     private static int search(int[] nums, int target){
@@ -317,7 +323,6 @@ public class Code {
         }
         return image;
     }
-
 //    private static void floodFill_dfs(int[][] image, int i, int j, int color, int number){
 //        if(i<0 || i>=image.length || j<0 || j>=image[0].length || image[i][j]==color || image[i][j]!=number){
 //            return;
@@ -330,6 +335,7 @@ public class Code {
 //            floodFill_dfs(image,i,j+1,color,temp);
 //        }
 //    }
+
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 //        //递归巧妙方法（利用二叉树原理，左边为小右边为大，root与两者相减后相乘为正数即为root，否则为其中一边的值）但处理不了负数情况
 //        if ((root.val - p.val) * (root.val - q.val) <= 0)
@@ -361,4 +367,171 @@ public class Code {
         }
         return ancestor;
     }
+
+    public static boolean isBalanced(TreeNode root){
+//        //官方自顶向下递归
+//        if(root == null){ //空节点也是平衡树
+//            return true;
+//        } else {
+//            return Math.abs(depth(root.left)-depth(root.right)) <=1 && isBalanced(root.left) && isBalanced(root.right);
+//        }
+
+        //官方自底向上递归
+        return height(root) >= 0;
+
+    }
+    //这就是树寻找节点高度的方式
+//    public static int depth(TreeNode root){
+//        if(root == null){
+//            return 0;
+//        }else{
+//            return Math.max(depth(root.left),depth(root.right))+1;
+//        }
+//    }
+//
+    public static int height(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        int leftHeight,rightHeight;
+        //在判断里先算完左边节点递归的isBalance后，得出结果不为平衡树则不需要再递归右边节点，这可以更快！
+        if((leftHeight = height(root.left)) == -1 || (rightHeight = height(root.right)) ==-1 || Math.abs(leftHeight-rightHeight)>1){
+            return -1;
+        }
+        return Math.max(leftHeight,rightHeight) + 1;
+    }
+
+
+    public static boolean hasCycle(ListNode head){
+//        //快慢指针
+//        if(head==null || head.next==null){
+//            return false;
+//        }
+//        ListNode pOne = head;
+//        ListNode pTwo = head;
+//
+//        pOne = pOne.next;
+//        pTwo = pTwo.next.next;
+//
+//        while (pTwo!=pOne){
+//            if(pTwo==null || pTwo.next ==null){
+//                return false;
+//            }
+//            pTwo = pTwo.next.next;
+//            pOne = pOne.next;
+//        }
+//
+//        return true;
+
+        //hashset
+        Set<ListNode> seen = new HashSet<ListNode>();
+        while (head != null) {
+            if (!seen.add(head)) {
+                return true;
+            }
+            head = head.next;
+        }
+        return false;
+
+    }
+
+    public static int firstBadVersion(int n) {
+        int left = 1;
+        int right = n;
+        while(left<right){
+            int mid = left + (right-left)/2;
+            if(!isBadVersion(mid)){
+                left = mid + 1;
+            }else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+    public static boolean isBadVersion(int version){
+        return version==1;
+    }
+
+    public static boolean canConstruct(String ransomNote, String magazine){
+        //hashtable
+        if(ransomNote.length()>magazine.length()){
+            return false;
+        }
+        return hashtable(ransomNote, magazine);
+    }
+
+    private static boolean hashtable(String includeStr, String allStr) {
+        int[] hashtable = new int[26];
+
+        for(char str : allStr.toCharArray()){
+            hashtable[str-'a']++;
+        }
+        for(char str : includeStr.toCharArray()){
+            hashtable[str-'a']--;
+            if(hashtable[str-'a']<0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int climbStairs(int n){
+//       // dp思想 动态规划
+//        int[] dp = new int[n + 1];
+//        dp[0] = 1;
+//        dp[1] = 1;
+//        for(int i = 2; i <= n; i++) {
+//            dp[i] = dp[i - 1] + dp[i - 2];
+//        }
+//        return dp[n];
+
+//        //以下为动态规划优化
+//        //确定了第一步跟第二步，第三步的结果为第一步跟第二步的和
+//        if(n==1 || n == 2){
+//            return n;
+//        }
+//        int a = 1, b = 2, tmp;
+//
+//        //第n步为n-1与n-2的和  即 dp[n] = dp[n-1] + dp[n-2]
+//        //从第三步开始，一直到第n步， a为n-2，b为n-1，进行循环后a为n-1，b为n
+//        for(int i = 3; i<=n ; i++){
+//            tmp = a;
+//            a = b;
+//            b = tmp + b;
+//        }
+//        return b;
+
+//        //官方斐波那契数学方式化简方程，通项公式
+//        double sqrt5 = Math.sqrt(5);
+//        double f = Math.pow((1 + sqrt5) / 2, n + 1) - Math.pow((1 - sqrt5) / 2, n + 1);
+//        return (int) Math.round(f / sqrt5);
+
+        //官方优化进阶矩阵快速幂，。。。好难。。。
+        int[][] q = {{1, 1}, {1, 0}};
+        int[][] res = pow(q, n);
+        return res[0][0];
+    }
+
+    public static int[][] pow(int[][] a, int n) {
+        int[][] ret = {{1, 0}, {0, 1}};
+        while (n > 0) {
+            if ((n & 1) == 1) {
+                ret = multiply(ret, a);
+            }
+            n >>= 1;
+            a = multiply(a, a);
+        }
+        return ret;
+    }
+
+    public static int[][] multiply(int[][] a, int[][] b) {
+        int[][] c = new int[2][2];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                c[i][j] = a[i][0] * b[0][j] + a[i][1] * b[1][j];
+            }
+        }
+        return c;
+    }
+
 }
