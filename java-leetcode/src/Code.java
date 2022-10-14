@@ -1,11 +1,11 @@
 
 
-import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 import java.util.*;
 
-
+//从Grind 75 的 2 开始
 public class Code {
     public static void main(String[] args) {
+
 //        String input1 = "{([])}";
 //        boolean check = isStackValid(input1);
 //        System.out.println(check); //Valid parentheses
@@ -50,6 +50,9 @@ public class Code {
 
 //        TreeNode root;
 //        //平衡二叉树，查看leetcode
+
+//        ListNode hascyle = new ListNode();
+//        //has cycle, 查看leetcode
 //
 //        MyQueue obj = new MyQueue();
 //        obj.push(1);
@@ -59,14 +62,23 @@ public class Code {
 //        boolean param_4 = obj.empty();
 //        System.out.println(param_2+"\n"+param_3+"\n"+param_4);
 
-        String ransomNote = "aa";
-        String magazine = "aab";
-        System.out.println(canConstruct(ransomNote,magazine));
+//        String ransomNote = "aa";
+//        String magazine = "aab";
+//        System.out.println(canConstruct(ransomNote,magazine));
+
+//        int n = 45;
+//        System.out.println(climbStairs(n));
+//
+//        String s = "aabbccd";
+//        System.out.println(longestPalindrome(s));
+
+        ListNode listNode = new ListNode();
+        //题目查看leetcode
     }
 
 
 
-    //Valid parentheses
+    //20. Valid parentheses
     public static boolean isStackValid(String s) {
 
         Stack<Character> stk = new Stack<>();
@@ -84,6 +96,7 @@ public class Code {
         return stk.isEmpty();
     }
 
+    //21. Merge Two Sorted Lists
     public static ListNode mergeTwoLists(ListNode list1, ListNode list2){
         ListNode list = new ListNode(-1);//头不用管
         ListNode cur = list;
@@ -107,6 +120,7 @@ public class Code {
         return list.next;
     }
 
+    //121. Best Time to Buy and Sell Stock
     public static int maxProfit(int[] prices) {
 
         //一次循环
@@ -149,6 +163,7 @@ public class Code {
         return max;
     }
 
+    //125. Valid Palindrome
     private static boolean isPalindrome(String s) {
 //        //暴力解法
 //        s = s.toLowerCase().replaceAll("[^A-Za-z0-9]","").replaceAll(" ",""); //做了多次循环导致了速度变慢
@@ -185,6 +200,7 @@ public class Code {
         return true;
     }
 
+    //226. Invert Binary Tree
     private static TreeNode invertTree(TreeNode root){
 
         if(root == null){
@@ -217,6 +233,7 @@ public class Code {
         return root;
     }
 
+    //242. Valid Anagram
     private static boolean isAnagram(String s, String t){
         //相加字符结果 出错
 //        int counter1=0,counter2=0;
@@ -260,6 +277,7 @@ public class Code {
         return hashtable(t, s);//详细见下文
     }
 
+    //704. Binary Search
     private static int search(int[] nums, int target){
 //        //暴力解法  太慢
 //        for(int i=0;i<nums.length;i++){
@@ -286,6 +304,7 @@ public class Code {
         return -1;
     }
 
+    //733. Flood Fill
     private static int[][] floodFill(int[][] image, int sr, int sc, int color) {
         //DFS
 //        floodFill_dfs(image,sr,sc,color,image[sr][sc]);
@@ -323,19 +342,20 @@ public class Code {
         }
         return image;
     }
-//    private static void floodFill_dfs(int[][] image, int i, int j, int color, int number){
-//        if(i<0 || i>=image.length || j<0 || j>=image[0].length || image[i][j]==color || image[i][j]!=number){
-//            return;
-//        }else {
-//            int temp = image[i][j];
-//            image[i][j] = color;
-//            floodFill_dfs(image,i-1,j,color,temp);
-//            floodFill_dfs(image,i+1,j,color,temp);
-//            floodFill_dfs(image,i,j-1,color,temp);
-//            floodFill_dfs(image,i,j+1,color,temp);
-//        }
-//    }
+    private static void floodFill_dfs(int[][] image, int i, int j, int color, int number){
+        if(i<0 || i>=image.length || j<0 || j>=image[0].length || image[i][j]==color || image[i][j]!=number){
+            return;
+        }else {
+            int temp = image[i][j];
+            image[i][j] = color;
+            floodFill_dfs(image,i-1,j,color,temp);
+            floodFill_dfs(image,i+1,j,color,temp);
+            floodFill_dfs(image,i,j-1,color,temp);
+            floodFill_dfs(image,i,j+1,color,temp);
+        }
+    }
 
+    //235. Lowest Common Ancestor of a Binary Search Tree
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 //        //递归巧妙方法（利用二叉树原理，左边为小右边为大，root与两者相减后相乘为正数即为root，否则为其中一边的值）但处理不了负数情况
 //        if ((root.val - p.val) * (root.val - q.val) <= 0)
@@ -368,6 +388,7 @@ public class Code {
         return ancestor;
     }
 
+    //110. Balanced Binary Tree
     public static boolean isBalanced(TreeNode root){
 //        //官方自顶向下递归
 //        if(root == null){ //空节点也是平衡树
@@ -381,14 +402,13 @@ public class Code {
 
     }
     //这就是树寻找节点高度的方式
-//    public static int depth(TreeNode root){
-//        if(root == null){
-//            return 0;
-//        }else{
-//            return Math.max(depth(root.left),depth(root.right))+1;
-//        }
-//    }
-//
+    public static int depth(TreeNode root){
+        if(root == null){
+            return 0;
+        }else{
+            return Math.max(depth(root.left),depth(root.right))+1;
+        }
+    }
     public static int height(TreeNode root){
         if(root == null){
             return 0;
@@ -399,9 +419,9 @@ public class Code {
             return -1;
         }
         return Math.max(leftHeight,rightHeight) + 1;
-    }
+    }//属于isBlance
 
-
+    //141. Linked List Cycle
     public static boolean hasCycle(ListNode head){
 //        //快慢指针
 //        if(head==null || head.next==null){
@@ -435,6 +455,9 @@ public class Code {
 
     }
 
+    //232. Implement Queue using Stacks  见myQueue
+
+    //278. First Bad Version
     public static int firstBadVersion(int n) {
         int left = 1;
         int right = n;
@@ -450,8 +473,9 @@ public class Code {
     }
     public static boolean isBadVersion(int version){
         return version==1;
-    }
+    }//属于firstBadVersion
 
+    //383. Ransom Note
     public static boolean canConstruct(String ransomNote, String magazine){
         //hashtable
         if(ransomNote.length()>magazine.length()){
@@ -473,8 +497,9 @@ public class Code {
             }
         }
         return true;
-    }
+    } //属于canConstruct和isAnagram
 
+    //70. Climbing Stairs
     public static int climbStairs(int n){
 //       // dp思想 动态规划
 //        int[] dp = new int[n + 1];
@@ -511,7 +536,6 @@ public class Code {
         int[][] res = pow(q, n);
         return res[0][0];
     }
-
     public static int[][] pow(int[][] a, int n) {
         int[][] ret = {{1, 0}, {0, 1}};
         while (n > 0) {
@@ -522,8 +546,7 @@ public class Code {
             a = multiply(a, a);
         }
         return ret;
-    }
-
+    } //属于climbStairs
     public static int[][] multiply(int[][] a, int[][] b) {
         int[][] c = new int[2][2];
         for (int i = 0; i < 2; i++) {
@@ -532,6 +555,142 @@ public class Code {
             }
         }
         return c;
+    }//属于climbStairs
+
+    //409. Longest Palindrome
+    public static int longestPalindrome(String s) {
+        //hashtable
+        // 回文数的特性是  aabb 或 aacbb  所以有且只有一个字符是奇数能添加，其余均为偶数
+        int[] table = new int[128];
+        for(char st : s.toCharArray()){
+            table[st]++;
+        }
+
+        int ans = 0;
+        for(int i : table){
+            ans += i/2 * 2; //根据int的特性，整除法，例如：a出现5次，实际上只要用4次而已
+            if(i%2==1 && ans%2 == 0){//有且仅当i的值为奇数时，并且ans为偶数时
+                ans++;
+            }
+        }
+
+        return ans;
     }
 
+    //206. Reverse Linked List
+    public static ListNode reverseList(ListNode head) {
+//        //迭代
+//        ListNode prev = null;
+//        ListNode curr = head;
+//        while(curr!=null){
+//            ListNode next = curr.next;
+//            curr.next = prev;
+//            prev = curr;
+//            curr = next;
+//        }
+//        return prev;
+
+        //递归
+        if(head == null || head.next == null){
+            return head;
+        }
+        ListNode newHead = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
+    }
+
+    //169. Majority Element
+    public static int majorityElement(int[] nums) {
+//        //Hashmap方法
+//        HashMap<Integer,Integer> counts = allNumber(nums);
+//        //Map.Entry是Map声明的一个内部接口， 它表示Map中的一个实体（一个key-value对）  可以理解为map是个数组，map.entry是其中一个数
+//        Map.Entry<Integer,Integer> majorityEntry = null;
+//        for(Map.Entry<Integer,Integer>  entry : counts.entrySet()){//只取entry进行遍历
+//            if(majorityEntry==null || entry.getValue() > majorityEntry.getValue()){//相当于max 比较最大值
+//                majorityEntry =  entry;
+//            }
+//        }
+//        assert majorityEntry != null;
+//        return majorityEntry.getKey();
+//
+//        //排序法
+//        //太神奇了，其实就是这个题的特性，将数字排好序之后，中间出现的那个数字的值一定是最多的那个
+//        Arrays.sort(nums);
+//        return nums[nums.length / 2];
+
+//        //随机化, 因为众数出现的概率最大 所以随机取很大概率就是多数   ps:完全看运气
+//        Random rand = new Random();
+//
+//        int majorityCount = nums.length / 2;
+//
+//        while (true) {
+//            int candidate = nums[randRange(rand, nums.length)];
+//            if (countOccurrences(nums, candidate) > majorityCount) {
+//                return candidate;
+//            }
+//        }
+
+        //摩尔投票法  神奇！ 仅限于优先给定条件，给出的数组是一定有多数的，即多数的数量大于n/2
+        //遇到相同票数+1，否则-1，因为题目给出多数的数量大于n/2，因此其他值相加小于n/2，因此多数的总和一定是大于其他数
+        //总结，得出最后counter不为0的数，ret即多数
+        int ret = 0;
+        int counter = 0;
+        for (int num : nums) {
+            if (counter == 0) {
+                ret = num;
+                counter = 1;
+            } else if (num == ret) {
+                counter++;
+            } else {
+                counter--;
+            }
+        }
+        return ret;
+    }
+    public static HashMap<Integer,Integer> allNumber(int[] nums){ //遍历数组 将每个元素出现的次数存入hashmap中
+        HashMap<Integer,Integer> hashMap = new HashMap<>();
+        for(int i : nums){
+            if(!hashMap.containsKey(i)){
+                hashMap.put(i,1);
+            }else{
+                hashMap.put(i,hashMap.get(i)+1);
+            }
+        }
+        return hashMap;
+    }
+    private static int countOccurrences(int[] nums, int num) {
+        int count = 0;
+        for (int j : nums) {
+            if (j == num) {
+                count++;
+            }
+        }
+        return count;
+    }
+    private static int randRange(Random rand, int max) {
+        return rand.nextInt(max);
+    }
+
+    //67. Add Binary
+    public String addBinary(String a, String b) {
+        StringBuilder ans = new StringBuilder();
+        int carry = 0;
+
+        //同步遍历
+        for(int i = a.length()-1, j = b.length()-1;i>=0 || j>=0;i--,j--){
+            int sum = carry;
+
+            //先选a中的各位值，再加上b中的各位值
+            sum += i>=0 ? a.charAt(i)-'0' : 0;
+            sum += j>=0 ? b.charAt(j)-'0' : 0;
+
+            //计算单个位的值大，相加等于2时，carry为1，否则为0
+            ans.append(sum%2);
+            carry = sum/2;
+        }
+        //在尾巴加上carry位，最后反转过来就是答案
+        ans.append(carry==1 ? carry : "");
+        return ans.reverse().toString();
+    }
 }
