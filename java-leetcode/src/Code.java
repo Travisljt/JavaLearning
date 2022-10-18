@@ -1,5 +1,7 @@
 
 
+import org.w3c.dom.Node;
+
 import java.util.*;
 
 //从Grind 75 的 2 开始
@@ -72,7 +74,7 @@ public class Code {
 //        String s = "aabbccd";
 //        System.out.println(longestPalindrome(s));
 
-        ListNode listNode = new ListNode();
+        ListNode listNode1 = new ListNode(1);
         //题目查看leetcode
     }
 
@@ -673,7 +675,7 @@ public class Code {
     }
 
     //67. Add Binary
-    public String addBinary(String a, String b) {
+    public static String addBinary(String a, String b) {
         StringBuilder ans = new StringBuilder();
         int carry = 0;
 
@@ -692,5 +694,23 @@ public class Code {
         //在尾巴加上carry位，最后反转过来就是答案
         ans.append(carry==1 ? carry : "");
         return ans.reverse().toString();
+    }
+
+    //543. Diameter of Binary Tree
+    static int diameter_ans = 0;
+    public static int diameterOfBinaryTree(TreeNode root) {
+        //递归
+        diameterOfBinaryTree_dfs(root);
+        return diameter_ans;
+    }
+
+    public static int diameterOfBinaryTree_dfs(TreeNode root){
+        if(root==null){
+            return 0;//访问到空节点
+        }
+        int leftSize = diameterOfBinaryTree_dfs(root.left);//左儿子为根的深度
+        int rightSize = diameterOfBinaryTree_dfs(root.right);//右儿子为跟的深度
+        diameter_ans = Math.max(diameter_ans,leftSize + rightSize);//将每个节点最大直径（左树深度跟右树深度）与当前最大值进行比较
+        return Math.max(leftSize,rightSize) + 1;//返回节点深度 +1是加上当前节点
     }
 }
