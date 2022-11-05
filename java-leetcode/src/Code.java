@@ -713,4 +713,108 @@ public class Code {
         diameter_ans = Math.max(diameter_ans,leftSize + rightSize);//将每个节点最大直径（左树深度跟右树深度）与当前最大值进行比较
         return Math.max(leftSize,rightSize) + 1;//返回节点深度 +1是加上当前节点
     }
+
+    //876. Middle of the Linked List
+    public ListNode middleNode(ListNode head) {
+//        //暴力解法（单指针）
+//        ListNode cnt = head;
+//        int counter = 0;
+//        while(cnt!=null){
+//            counter++;
+//            cnt = cnt.next;
+//        }
+//        for(int i=0;i<counter/2;i++){
+//            head = head.next;
+//        }
+//        return head;
+
+        //快慢指针
+        ListNode slow = head, fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    //104. Maximum Depth of Binary Tree
+    public int maxDepth(TreeNode root) {
+        //递归
+        if(root==null){
+            return 0;
+        }
+        int leftSize = maxDepth(root.left);
+        int rightSize = maxDepth(root.right);
+        return Math.max(leftSize,rightSize)+1;
+    }
+
+    //217. Contains Duplicate
+    public boolean containsDuplicate(int[] nums) {
+//        //hashset
+//        HashSet<Integer> table = new HashSet<>();
+//        for(int i : nums){
+//            if(!table.add(i)) {
+//                return true;
+//            }
+//        }
+//        return false;
+
+//        //排序法（很慢）
+//        Arrays.sort(nums);
+//        int n = nums.length;
+//        for (int i = 0; i < n - 1; i++) {
+//            if (nums[i] == nums[i + 1]) {
+//                return true;
+//            }
+//        }
+//        return false;
+
+        //Stream流
+        return Arrays.stream(nums).distinct().count() < nums.length;
+    }
+
+    //53. Maximum Subarray
+    public int maxSubArray(int[] nums) {
+        //动态规划
+        int pre = 0, maxValue = nums[0];
+        for(int i : nums){
+            pre = Math.max(pre+i,i);
+            maxValue = Math.max(pre,maxValue);
+        }
+        return maxValue;
+    }
+
+    //57. Insert Interval
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        //模拟解法
+        int left = newInterval[0];
+        int right = newInterval[1];
+        List<int[]> ansList = new ArrayList<>();
+        boolean placed = false;//标记符  确认插入前后
+        for(int[] interval : intervals){
+            if(interval[0]>right){
+                if(!placed){
+                    ansList.add(new int[]{left,right});
+                    placed = true;
+                }
+                ansList.add(interval);
+            }else if (interval[1]<left){
+                ansList.add(interval);
+            }else{
+                left = Math.min(left,interval[0]);
+                right = Math.max(right,interval[1]);
+            }
+        }
+        if(!placed){
+            ansList.add(new int[]{left,right});
+        }
+        int[][] ans = new int[ansList.size()][2];
+        for(int i=0;i<ansList.size();i++){
+            ans[i] = ansList.get(i);
+        }
+        return ans;
+    }
+
+    //542. 01 Matrix
+
 }
