@@ -211,7 +211,7 @@ public class Code {
 
          //递归
 //        TreeNode tmpNode = root.left;
-//        root.left = root .right;
+//        root.left = root.right;
 //        root.right = tmpNode;
 //        invertTree(root.left);
 //        invertTree(root.right);
@@ -359,7 +359,7 @@ public class Code {
 
     //235. Lowest Common Ancestor of a Binary Search Tree
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-//        //递归巧妙方法（利用二叉树原理，左边为小右边为大，root与两者相减后相乘为正数即为root，否则为其中一边的值）但处理不了负数情况
+//        //递归巧妙方法（利用二叉排序树原理，左边为小右边为大，root与两者相减后相乘为正数即为root，否则为其中一边的值）但处理不了负数情况
 //        if ((root.val - p.val) * (root.val - q.val) <= 0)
 //            return root;
 //        //否则，p和q位于root的同一侧，就继续往下找
