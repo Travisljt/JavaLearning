@@ -1,5 +1,8 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.Student;
+import com.example.demo.StudetnRowMapper;
+import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,6 +19,10 @@ public class JDBCController {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private StudentService studentService;
+
     @PostMapping("/newStudent")
     public String insert(@RequestBody Student student){
 
@@ -59,5 +66,10 @@ public class JDBCController {
         namedParameterJdbcTemplate.update(sql,map);
 
         return "执行 delete";
+    }
+
+    @GetMapping("/newStudent/{studentId}")
+    public Student select(@PathVariable Integer studentId){
+        return studentService.getById(studentId);
     }
 }
